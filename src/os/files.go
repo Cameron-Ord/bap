@@ -1,6 +1,0 @@
-package sys
-
-
-func ReadFile() {
-	
-}

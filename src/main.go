@@ -2,6 +2,7 @@ package main
 
 import (
 	"main/term"
+	"main/sys"
 )
 
 func main(){
