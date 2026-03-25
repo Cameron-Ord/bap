@@ -1,0 +1,6 @@
+package sys
+
+
+func ReadFile() {
+	
+}
