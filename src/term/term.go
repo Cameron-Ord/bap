@@ -6,22 +6,6 @@ import (
 	"github.com/gdamore/tcell/v3/color"
 )
 
-func InputQueue(screen tcell.Screen) bool {
-	event := <-screen.EventQ()
-	switch event := event.(type){
-		case *tcell.EventResize: {
-			ScrSync(screen)
-		} 
-
-		case *tcell.EventKey: {
-			if event.Key() == tcell.KeyEscape {
-				return true 
-			}
-		}
-	}
-	return false
-}
-
 func BaseStyle() tcell.Style {
 	return tcell.StyleDefault.Background(color.Reset).Foreground(color.Reset)
 }
