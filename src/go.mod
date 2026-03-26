@@ -1,6 +1,6 @@
 module main
 
-go 1.26.1
+go 1.25.8
 
 require github.com/gdamore/tcell/v3 v3.1.2
 

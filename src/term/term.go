@@ -6,6 +6,19 @@ import (
 	"github.com/gdamore/tcell/v3/color"
 )
 
+
+func PutStringStyled(screen tcell.Screen, x int, y int, str string, style tcell.Style){
+	screen.PutStrStyled(x, y, str, style)
+}
+
+func PutString(screen tcell.Screen, x int, y int, str string){
+	screen.PutStr(x, y, str)
+}
+
+func PutChar(screen tcell.Screen, x int, y int, character string, style tcell.Style){
+	screen.Put(x, y, character, style)
+}
+
 func BaseStyle() tcell.Style {
 	return tcell.StyleDefault.Background(color.Reset).Foreground(color.Reset)
 }
