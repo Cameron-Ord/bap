@@ -6,7 +6,6 @@ import (
 	"github.com/gdamore/tcell/v3/color"
 )
 
-
 func PutStringStyled(screen tcell.Screen, x int, y int, str string, style tcell.Style){
 	screen.PutStrStyled(x, y, str, style)
 }

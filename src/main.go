@@ -1,35 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"main/term"
-	"main/sys"
+	"main/internal"
+	"main/util"
 	"github.com/gdamore/tcell/v3"
 )
 
-func ParseBytes(buffer []byte) [][]rune {
-	const delimiter = '\n'
-	const skip = '\r'
-
-	line_buffer := make([][]rune, 0)
-	byte_str := make([]byte, 0)
-
-	for _, byte := range buffer {
-		if byte != delimiter && byte != skip {
-			byte_str = append(byte_str, byte)
-		} else if byte == delimiter {
-			line_buffer = append(line_buffer, []rune(string(byte_str)))
-			byte_str = byte_str[:0]
-		}
-	}
-
-	if len(byte_str) > 0 {
-		line_buffer = append(line_buffer, []rune(string(byte_str)))
-	}
-
-	return line_buffer
-}
 
 func main(){
 	args := os.Args
@@ -37,16 +15,11 @@ func main(){
 	if len(args) > 1 && len(args) < 3 {
 		filepath = args[1]
 	}
-
-	file := sys.OpenFile(filepath)
-	data := sys.ReadFile(file)
-	line_buffer := ParseBytes(data)
+	list := internal.Make_List()
 	
-	for _, line := range line_buffer {
-		fmt.Println(string(line))
-	}
-
-	sys.CloseFile(file)
+	file := internal.OpenFile(filepath)
+	internal.Append_Buffer(util.ParseBytes(internal.ReadFile(file)), filepath, &list)
+	internal.CloseFile(file)
 
 	screen := term.CreateScreen()
 	term.Initialize(screen)
@@ -77,6 +50,8 @@ func main(){
 				}
 			}
 		}
+
+		term.Render_Buffer_Generic(list.Buffers[list.Index].Data, screen)
 
 	}
 }
