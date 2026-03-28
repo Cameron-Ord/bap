@@ -5,27 +5,20 @@ import (
 )
 
 func Fill(rows int, cols int, screen tcell.Screen, style tcell.Style){
-	for row := 0; row <= rows; row++ {
-		for col := 0; col <= cols; col++{
-			PutChar(screen, col, row, " ", style)
+	for row := range rows {
+		for col := range cols{
+			screen.SetContent(col, row, ' ', nil, style)
 		}
 	}
 }
 	
-func Render_Buffer_Generic(buffer [][]rune, _x int, _y int, screen tcell.Screen, style tcell.Style){
+func Render_Buffer_Generic(buffer [][]rune, offset_x int, offset_y int, screen tcell.Screen, style tcell.Style){
 	row := 0
-	section := buffer[_y:]
-
-	for _, line := range section {
-		col := 0 
-		str := string(line)
-		width := 0
-		for str != "" {
-			str, width = PutChar(screen, col, row, str, style)
-			col += width
-			if width == 0 {
-				break
-			}
+	for _, line := range buffer[offset_y:]{
+		col := 0
+		for _, rune := range line {
+			screen.SetContent(col, row, rune, nil, style)
+			col++
 		}
 		row++
 	}

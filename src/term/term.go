@@ -6,32 +6,12 @@ import (
 	"github.com/gdamore/tcell/v3/color"
 )
 
-func PutStringStyled(screen tcell.Screen, x int, y int, str string, style tcell.Style){
-	screen.PutStrStyled(x, y, str, style)
-}
-
-func PutString(screen tcell.Screen, x int, y int, str string){
-	screen.PutStr(x, y, str)
-}
-
-func PutChar(screen tcell.Screen, x int, y int, character string, style tcell.Style) (string, int) {
-	return screen.Put(x, y, character, style)
+func CreateStyle(bg color.Color, fg color.Color) tcell.Style {
+	return tcell.StyleDefault.Background(bg).Foreground(fg)
 }
 
 func BaseStyle() tcell.Style {
 	return tcell.StyleDefault.Background(color.Reset).Foreground(color.Reset)
-}
-
-func ScrSync(screen tcell.Screen) {
-	screen.Sync()
-}
-
-func ScrShow(screen tcell.Screen) {
-	screen.Show()
-}
-
-func ScrSetStyle(screen tcell.Screen, style tcell.Style) {
-	screen.SetStyle(style)
 }
 
 func CreateScreen() tcell.Screen {
@@ -47,8 +27,3 @@ func Initialize(screen tcell.Screen)  {
 		log.Fatalf("%+v", err)
 	}
 }
-
-func ClearScreen(screen tcell.Screen){
-	screen.Clear()
-}
-
