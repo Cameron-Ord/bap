@@ -35,9 +35,23 @@ func Buffer_Delete_Rune(list *List){
 	if !Cursor_In_Bounds(list) {
 		return
 	}
-	
-//	buffer := list.Buffers[list.Index].Data
-//	cursor := list.Buffers[list.Index].Cursor
+
+	buffer := list.Buffers[list.Index].Data
+	cursor := &list.Buffers[list.Index].Cursor
+	switch len(buffer[cursor.Y]) {
+		default:{
+			if cursor.X >= len(buffer[cursor.Y]) {
+				cursor.X = len(buffer[cursor.Y]) - 1
+			}
+			list.Buffers[list.Index].Data[cursor.Y] = append(buffer[cursor.Y][:cursor.X], buffer[cursor.Y][cursor.X + 1:]...)
+		}
+
+		case 0: {
+			if len(buffer) - 1 >= 0 {
+				list.Buffers[list.Index].Data = append(buffer[:cursor.Y], buffer[cursor.Y + 1:]...)
+			}
+		}
+	}
 }
 
 func Buffer_Add_Rune(codepoint rune, list *List){

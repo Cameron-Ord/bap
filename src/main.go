@@ -51,23 +51,27 @@ func main(){
 					case tcell.KeyEscape: {
 						return
 					}
+					 case tcell.KeyDelete:{
+						internal.Buffer_Delete_Rune(&list)
+						screen.Clear()
+					 }
+
 					case tcell.KeyUp: {
 						internal.Cursor_Add_Y(-1, &list.Buffers[list.Index])
-						screen.Clear()
-						term.Render_Buffer_Generic(list.Buffers[list.Index].Data, 0, list.Buffers[list.Index].Cursor.Y, screen, style)
 					}
 					case tcell.KeyDown: {
 						internal.Cursor_Add_Y(1, &list.Buffers[list.Index])
-						screen.Clear()
-						term.Render_Buffer_Generic(list.Buffers[list.Index].Data, 0, list.Buffers[list.Index].Cursor.Y, screen, style)
 					}
 					case tcell.KeyRight: {
+						internal.Cursor_Add_X(1, &list.Buffers[list.Index])
 					}
 					case tcell.KeyLeft: {
+						internal.Cursor_Add_X(-1, &list.Buffers[list.Index])
 					}
 				}
 			}
 		}
-		
+		screen.ShowCursor(list.Buffers[list.Index].Cursor.X, list.Buffers[list.Index].Cursor.Y)
+		term.Render_Buffer_Generic(list.Buffers[list.Index].Data, 0, 0, screen, style)
 	}
 }
