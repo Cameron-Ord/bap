@@ -37,21 +37,31 @@ func main(){
 
 	for {
 		term.ScrShow(screen)
-
+	
 		event := <-screen.EventQ()
 		switch event := event.(type){
+		default:
 			case *tcell.EventResize: {
 				term.ScrSync(screen)
 			} 
 
 			case *tcell.EventKey: {
-				if event.Key() == tcell.KeyEscape {
-					return
+				switch event.Key() {
+					case tcell.KeyEscape: {
+						return
+					}
+					case tcell.KeyUp: {
+						internal.Cursor_Add_Y(-1, &list.Buffers[list.Index])
+					}
+					case tcell.KeyDown: {
+						internal.Cursor_Add_Y(1, &list.Buffers[list.Index])
+					}
+					case tcell.KeyRight: {}
+					case tcell.KeyLeft: {}
 				}
 			}
 		}
-
-		term.Render_Buffer_Generic(list.Buffers[list.Index].Data, screen)
-
+		buf := &list.Buffers[list.Index]
+		term.Render_Buffer_Generic(buf.Data, buf.Cursor.X, buf.Cursor.Y, screen, term.BaseStyle())
 	}
 }

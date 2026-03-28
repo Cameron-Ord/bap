@@ -3,6 +3,7 @@ package internal
 type Buffer struct {
 	Data [][]rune
 	Name string
+	Cursor Vec2i
 }
 
 type List struct {
@@ -23,31 +24,32 @@ func Make_List() List {
 }
 
 func Make_Buffer(_Data [][]rune, _Name string) Buffer {
-	return Buffer { Data: _Data, Name: _Name }
+	return Buffer { Data: _Data, Name: _Name, Cursor: Make_Cursor() }
 }
 
-func Buffer_Delete_Rune(list *List, cursor *Cursor){
+func Buffer_Delete_Rune(list *List){
 	if !Index_In_Bounds(list.Index, len(list.Buffers)){
 		return
 	}
 
-	if !Cursor_In_Bounds(cursor, list) {
+	if !Cursor_In_Bounds(list) {
 		return
 	}
-
-	list.Buffers[list.Index].Data[cursor.y] = append(list.Buffers[list.Index].Data[cursor.y][:cursor.x], list.Buffers[list.Index].Data[cursor.y][cursor.x + 1:]...)
+	
+//	buffer := list.Buffers[list.Index].Data
+//	cursor := list.Buffers[list.Index].Cursor
 }
 
-func Buffer_Add_Rune(codepoint rune, list *List, cursor *Cursor){
+func Buffer_Add_Rune(codepoint rune, list *List){
 	if !Index_In_Bounds(list.Index, len(list.Buffers)){
 		return
 	}
 
-	if !Cursor_In_Bounds(cursor, list) {
+	if !Cursor_In_Bounds(list) {
 		return
 	}
 
-	list.Buffers[list.Index].Data[cursor.y] = append(list.Buffers[list.Index].Data[cursor.y][:cursor.x], codepoint)
+	//list.Buffers[list.Index].Data[cursor.Y] = append(list.Buffers[list.Index].Data[cursor.Y][:cursor.X], codepoint)
 }
 
 func Append_Buffer(Data [][]rune, Name string, list *List) {

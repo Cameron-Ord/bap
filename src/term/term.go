@@ -14,8 +14,8 @@ func PutString(screen tcell.Screen, x int, y int, str string){
 	screen.PutStr(x, y, str)
 }
 
-func PutChar(screen tcell.Screen, x int, y int, character string, style tcell.Style){
-	screen.Put(x, y, character, style)
+func PutChar(screen tcell.Screen, x int, y int, character string, style tcell.Style) (string, int) {
+	return screen.Put(x, y, character, style)
 }
 
 func BaseStyle() tcell.Style {
